@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -18,10 +20,12 @@ public class Card {
     private String id;
 
     @Field(name = "account_type")
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
     private BigDecimal balance;
 
+    @Enumerated(EnumType.STRING)
     private TypeCurrency currency;
 
     @Field(name = "account_number")
