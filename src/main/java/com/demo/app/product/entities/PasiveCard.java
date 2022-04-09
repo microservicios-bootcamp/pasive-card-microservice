@@ -1,21 +1,23 @@
 package com.demo.app.product.entities;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Date;
 
-@Document(collection = "card")
+@JsonPropertyOrder({"id","dni","accountType","balance","currency","accountNumber","cvc","createdAt","updateAt"})
+@Document(collection = "pasive_card")
 @Data
-public class Card {
-
+public class PasiveCard extends Audit{
     @Id
     private String id;
 
@@ -23,22 +25,22 @@ public class Card {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
+    @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal balance;
 
     @Enumerated(EnumType.STRING)
     private TypeCurrency currency;
 
     @Field(name = "account_number")
+    @Size(min = 16,max = 16)
     private String accountNumber;
 
+    @Range(min = 100,max = 999)
     private Integer cvc;
 
-    @CreatedDate
-    @Field(name = "create_at")
-    private Date createAt;
 
-    @LastModifiedDate
-    @Field(name = "update_at")
-    private Date updateAt;
+    @NotEmpty
+    @Size(min = 8,max = 8)
+    private String dni;
 
 }
