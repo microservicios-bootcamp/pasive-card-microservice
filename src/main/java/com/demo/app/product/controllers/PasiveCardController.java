@@ -24,8 +24,8 @@ public class PasiveCardController {
     }
 
     @GetMapping("/dni/{dni}")
-    private Mono<ResponseEntity<Boolean>> findByDni(@PathVariable String dni){
-        return cardService.findByDni(dni).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.notFound().build());
+    private Mono<Boolean> findByDni(@PathVariable String dni){
+        return cardService.findByDni(dni);
     }
 
     @PostMapping

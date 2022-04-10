@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public interface PasiveCardRepository extends ReactiveMongoRepository<PasiveCard,String> {
-    Mono<Boolean> findByDni(String dni);
+    Mono<PasiveCard> findByDni(String dni);
 }
