@@ -1,30 +1,36 @@
 package com.demo.app.product.services.impl;
 
 
-import com.demo.app.product.entities.PasiveCard;
-import com.demo.app.product.repositories.PasiveCardRepository;
-import com.demo.app.product.services.PasiveCardService;
+import com.demo.app.product.entities.Card;
+import com.demo.app.product.entities.CardType;
+import com.demo.app.product.repositories.CardRepository;
+import com.demo.app.product.services.CardService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class PasiveCardServiceImpl implements PasiveCardService {
+public class CardServiceImpl implements CardService {
 
-    private final PasiveCardRepository cardRepository;
+    private final CardRepository cardRepository;
 
-    public PasiveCardServiceImpl(PasiveCardRepository cardRepository) {
+    public CardServiceImpl(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
 
     @Override
-    public Flux<PasiveCard> findAll() {
+    public Flux<Card> findAll() {
         return cardRepository.findAll();
     }
 
     @Override
-    public Mono<PasiveCard> save(PasiveCard card) {
+    public Mono<Card> save(Card card) {
         return cardRepository.save(card);
+    }
+
+    @Override
+    public Flux<Card> saveAll(Flux<Card> cards) {
+        return cardRepository.saveAll(cards);
     }
 
     @Override
@@ -34,9 +40,16 @@ public class PasiveCardServiceImpl implements PasiveCardService {
             return Mono.just(false);
         });
     }
+    @Override
+    public Mono<Boolean> findByDniCardType(String dni, CardType type) {
+        return cardRepository.findByDniAndCardType(dni,type).hasElement().flatMap(x->{
+            if(x)return Mono.just(true);
+            return Mono.just(false);
+        });
+    }
 
     @Override
-    public Mono<PasiveCard> update(PasiveCard card, String id) {
+    public Mono<Card> update(Card card, String id) {
         return cardRepository.findById(id).flatMap(x->{
             x.setCvc(card.getCvc());
             x.setAccountNumber(card.getAccountNumber());
@@ -44,6 +57,7 @@ public class PasiveCardServiceImpl implements PasiveCardService {
             x.setBalance(card.getBalance());
             x.setAccountType(card.getAccountType());
             x.setDni(card.getDni());
+            x.setCardType(card.getCardType());
             return cardRepository.save(x);
         });
     }

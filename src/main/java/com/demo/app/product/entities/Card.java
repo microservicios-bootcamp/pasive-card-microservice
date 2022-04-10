@@ -15,10 +15,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
-@JsonPropertyOrder({"id","dni","accountType","balance","currency","accountNumber","cvc","createdAt","updateAt"})
-@Document(collection = "pasive_card")
+@JsonPropertyOrder({"id","dni","cardType","accountType","balance","currency","accountNumber","cvc","createdAt","updateAt"})
+@Document(collection = "card")
 @Data
-public class PasiveCard extends Audit{
+public class Card extends Audit{
     @Id
     private String id;
 
@@ -32,13 +32,15 @@ public class PasiveCard extends Audit{
     @Enumerated(EnumType.STRING)
     private TypeCurrency currency;
 
+    @Enumerated(EnumType.STRING)
+    private CardType cardType;
+
     @Field(name = "account_number")
     @Size(min = 16,max = 16)
     private String accountNumber;
 
     @Range(min = 100,max = 999)
     private Integer cvc;
-
 
     @NotEmpty
     @Size(min = 8,max = 8)
