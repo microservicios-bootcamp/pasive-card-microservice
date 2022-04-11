@@ -4,6 +4,7 @@ package com.demo.app.product.controllers;
 import com.demo.app.product.entities.Card;
 import com.demo.app.product.entities.CardType;
 import com.demo.app.product.services.CardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -11,6 +12,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/card")
+@Tag(name = "Test APIs", description = "Test APIs for demo purpose")
 public class CardController {
     private final CardService cardService;
 
@@ -22,6 +24,11 @@ public class CardController {
     private ResponseEntity<Flux<Card>> findAll(){
         Flux<Card> card = cardService.findAll();
         return ResponseEntity.ok(card);
+    }
+
+    @GetMapping("/all/dni/{dni}")
+    private Flux<Card> findAllByDni(@PathVariable String dni){
+        return cardService.findAllByDni(dni);
     }
 
     @GetMapping("/dni/{dni}")

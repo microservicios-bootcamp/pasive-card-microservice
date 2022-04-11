@@ -28,9 +28,16 @@ public class CardServiceImpl implements CardService {
         return cardRepository.save(card);
     }
 
+
+
     @Override
     public Flux<Card> saveAll(Flux<Card> cards) {
         return cardRepository.saveAll(cards);
+    }
+
+    @Override
+    public Flux<Card> findAllByDni(String dni) {
+        return cardRepository.findAllByDni(dni);
     }
 
     @Override
@@ -42,7 +49,7 @@ public class CardServiceImpl implements CardService {
     }
     @Override
     public Mono<Boolean> findByDniCardType(String dni, CardType type) {
-        return cardRepository.findByDniAndCardType(dni,type).hasElement().flatMap(x->{
+        return cardRepository.findAllByDniAndCardType(dni,type).hasElements().flatMap(x->{
             if(x)return Mono.just(true);
             return Mono.just(false);
         });

@@ -9,6 +9,7 @@ public interface CardService {
     Flux<Card> findAll();
     Mono<Card> save(Card card);
     Flux<Card> saveAll(Flux<Card> cards);
+    Flux<Card> findAllByDni(String dni);
     Mono<Boolean> findByDni(String dni);
     Mono<Boolean> findByDniCardType(String dni, CardType type);
     Mono<Card> update(Card card,String id);
