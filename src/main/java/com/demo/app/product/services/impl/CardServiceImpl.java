@@ -1,13 +1,18 @@
 package com.demo.app.product.services.impl;
 
 
+import com.demo.app.product.entities.AccountType;
 import com.demo.app.product.entities.Card;
 import com.demo.app.product.entities.CardType;
 import com.demo.app.product.repositories.CardRepository;
 import com.demo.app.product.services.CardService;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class CardServiceImpl implements CardService {
@@ -16,6 +21,17 @@ public class CardServiceImpl implements CardService {
 
     public CardServiceImpl(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
+    }
+
+    @Scheduled(cron = "*/5 * * * * *")
+    private void Maintenance(){
+        cardRepository.findAllByAccountType(AccountType.CUENTA_CORRIENTE)
+                .toStream().forEach(card -> {
+            System.out.println("Maintenance: " + card.getId());
+            card.setBalance(BigDecimal.valueOf(100));
+            System.out.println("Costo: " + card.getBalance());
+            cardRepository.save(card);
+        });
     }
 
     @Override
@@ -27,8 +43,6 @@ public class CardServiceImpl implements CardService {
     public Mono<Card> save(Card card) {
         return cardRepository.save(card);
     }
-
-
 
     @Override
     public Flux<Card> saveAll(Flux<Card> cards) {
