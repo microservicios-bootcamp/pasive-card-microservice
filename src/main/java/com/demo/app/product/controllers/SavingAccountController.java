@@ -34,6 +34,11 @@ public class SavingAccountController {
         return cardService.findByDni(dni);
     }
 
+    @GetMapping("/dni/{dni}/account/{account}")
+    private Mono<SavingAccount> findByDni(@PathVariable String dni,@PathVariable String account){
+        return cardService.findByDniAndAccount(dni,account);
+    }
+
     @PostMapping
     private ResponseEntity<Mono<SavingAccount>> save(@RequestBody SavingAccount card){
         return ResponseEntity.ok(cardService.save(card));

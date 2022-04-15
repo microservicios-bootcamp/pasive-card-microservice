@@ -48,6 +48,11 @@ public class FixedTermAccountServiceImpl implements FixedTermAccountService {
     }
 
     @Override
+    public Mono<FixedTermAccount> findByDniAndAccount(String dni, String account) {
+        return cardRepository.findByDniAndAccountNumber(dni,account);
+    }
+
+    @Override
     public Mono<Boolean> findByDni(String dni) {
         return cardRepository.findByDni(dni).hasElement().flatMap(x->{
             if(x)return Mono.just(true);

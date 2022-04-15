@@ -34,6 +34,11 @@ public class FixedTermAccountController {
         return cardService.findByDni(dni);
     }
 
+    @GetMapping("/dni/{dni}/account/{account}")
+    private Mono<FixedTermAccount> findByDni(@PathVariable String dni,@PathVariable String account){
+        return cardService.findByDniAndAccount(dni,account);
+    }
+
     @PostMapping
     private ResponseEntity<Mono<FixedTermAccount>> save(@RequestBody FixedTermAccount card){
         return ResponseEntity.ok(cardService.save(card));

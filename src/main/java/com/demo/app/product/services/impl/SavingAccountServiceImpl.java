@@ -48,6 +48,11 @@ public class SavingAccountServiceImpl implements SavingAccountService {
     }
 
     @Override
+    public Mono<SavingAccount> findByDniAndAccount(String dni, String account) {
+        return cardRepository.findByDniAndAccountNumber(dni,account);
+    }
+
+    @Override
     public Mono<Boolean> findByDni(String dni) {
         return cardRepository.findByDni(dni).hasElement().flatMap(x->{
             if(x)return Mono.just(true);

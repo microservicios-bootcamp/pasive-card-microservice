@@ -9,6 +9,7 @@ public interface FixedTermAccountService {
     Mono<FixedTermAccount> save(FixedTermAccount card);
     Flux<FixedTermAccount> saveAll(Flux<FixedTermAccount> cards);
     Flux<FixedTermAccount> findAllByDni(String dni);
+    Mono<FixedTermAccount> findByDniAndAccount(String dni, String account);
     Mono<Boolean> findByDni(String dni);
     Mono<FixedTermAccount> update(FixedTermAccount card,String id);
     Mono<Void> delete(String id);

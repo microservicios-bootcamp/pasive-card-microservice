@@ -3,26 +3,31 @@ package com.demo.app.product.controllers;
 import com.demo.app.product.entities.CurrentAccount;
 import com.demo.app.product.services.CurrentAccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
+@Slf4j
 @RequestMapping("/currentAccount")
 @Tag(name = "Test APIs", description = "Test APIs for demo purpose")
 public class CurrentAccountController {
+
     private final CurrentAccountService cardService;
+
 
     public CurrentAccountController(CurrentAccountService cardService) {
         this.cardService = cardService;
     }
 
+
     @GetMapping
     private ResponseEntity<Flux<CurrentAccount>> findAll(){
-        Flux<CurrentAccount> card = cardService.findAll();
-        return ResponseEntity.ok(card);
+        return ResponseEntity.ok(cardService.findAll());
     }
+
     @GetMapping("/all/dni/{dni}")
     private Flux<CurrentAccount> findAllByDni(@PathVariable String dni){
         return cardService.findAllByDni(dni);
@@ -31,6 +36,11 @@ public class CurrentAccountController {
     @GetMapping("/dni/{dni}")
     private Mono<Boolean> findByDni(@PathVariable String dni){
         return cardService.findByDni(dni);
+    }
+
+    @GetMapping("/dni/{dni}/account/{account}")
+    private Mono<CurrentAccount> findByDni(@PathVariable String dni,@PathVariable String account){
+        return cardService.findByDniAndAccount(dni,account);
     }
 
     @PostMapping
