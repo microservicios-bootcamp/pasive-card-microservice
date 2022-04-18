@@ -35,7 +35,7 @@ public class FixedTermAccountController {
     }
 
     @GetMapping("/dni/{dni}/account/{account}")
-    private Mono<FixedTermAccount> findByDni(@PathVariable String dni,@PathVariable String account){
+    private Mono<FixedTermAccount> findByDniAndAccount(@PathVariable String dni,@PathVariable String account){
         return cardService.findByDniAndAccount(dni,account);
     }
 

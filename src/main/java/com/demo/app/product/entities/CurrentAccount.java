@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @JsonPropertyOrder({"id","dni","balance","currency","accountNumber","cvc","createdAt","updateAt"})
 @Document(collection = "current_account")
 @Data
-public class CurrentAccount {
+public class CurrentAccount extends Audit{
     @Id
     private String id;
 

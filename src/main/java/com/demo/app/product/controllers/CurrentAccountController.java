@@ -39,7 +39,7 @@ public class CurrentAccountController {
     }
 
     @GetMapping("/dni/{dni}/account/{account}")
-    private Mono<CurrentAccount> findByDni(@PathVariable String dni,@PathVariable String account){
+    private Mono<CurrentAccount> findByDniAndAccount(@PathVariable String dni,@PathVariable String account){
         return cardService.findByDniAndAccount(dni,account);
     }
 
@@ -60,4 +60,5 @@ public class CurrentAccountController {
     private Mono<ResponseEntity<Void>> delete(@PathVariable String id){
         return cardService.delete(id).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.notFound().build());
     }
+
 }

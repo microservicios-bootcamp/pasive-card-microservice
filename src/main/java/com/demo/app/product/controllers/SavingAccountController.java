@@ -35,7 +35,7 @@ public class SavingAccountController {
     }
 
     @GetMapping("/dni/{dni}/account/{account}")
-    private Mono<SavingAccount> findByDni(@PathVariable String dni,@PathVariable String account){
+    private Mono<SavingAccount> findByDniAndAccount(@PathVariable String dni,@PathVariable String account){
         return cardService.findByDniAndAccount(dni,account);
     }
 
