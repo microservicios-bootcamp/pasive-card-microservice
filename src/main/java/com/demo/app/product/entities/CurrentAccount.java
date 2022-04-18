@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
-@JsonPropertyOrder({"id","dni","balance","currency","accountNumber","cvc","createdAt","updateAt"})
+@JsonPropertyOrder({"id","dni","balance","currency","accountNumber","cvc","type","createdAt","updateAt"})
 @Document(collection = "current_account")
 @Data
 public class CurrentAccount extends Audit{
@@ -26,6 +26,9 @@ public class CurrentAccount extends Audit{
 
     @Enumerated(EnumType.STRING)
     private TypeCurrency currency;
+
+    @Enumerated(EnumType.STRING)
+    private CurrentAccountType type;
 
     @Field(name = "account_number")
     @Size(min = 16,max = 16)
