@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.demo.app.product</groupId>
-    <artifactId>product-microservice</artifactId>
+    <artifactId>pasive-card-microservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>product-microservice</name>
+    <name>pasive-card-microservice</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
@@ -89,6 +89,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>microservicio-pasive-card</finalName>
     </build>
     <dependencyManagement>
         <dependencies>
@@ -101,7 +102,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-
-
 </project>
